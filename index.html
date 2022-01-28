@@ -1,0 +1,129 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style/main.css">
+    <link rel="icon" href="favicon.ico">
+    <title>Mazal Tov</title>
+</head>
+
+<body>
+    <div class='ayelet-div'>
+        <!-- <img class='ayelet' src="assets/ayelet-head.png" alt="ayelet"> -->
+        <img class='ayelet' src="assets/noya-head.png" alt="ayelet">
+    </div>
+
+    <div class="buttons">
+        <button class="btn" id="delete-btn">Delete All</button>
+        <button class="btn" id="random-colors-btn">Random Colors</button>
+        <button class="btn" id="change-colors-btn">Color on hover</button>
+        <button class="btn" id="random-gaga-btn">Random GAGA</button>
+    </div>
+    <div class='balloons'>
+
+    </div>
+
+</body>
+<script>
+    const BALLOON_URL = 'https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/240/apple/285/balloon_1f388.png';
+    const CONFETTI_URL = 'https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/240/apple/285/party-popper_1f389.png';
+
+    const AYELET_EMOJI = BALLOON_URL;
+    const SAAR_EMOJI = BALLOON_URL;
+    const ELAD_EMOJI = 'https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/apple/285/merperson_1f9dc.png';
+    // const NOYA_EMOJI = 'https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/240/apple/285/sparkles_2728.png';
+    const NOYA_EMOJI = BALLOON_URL;
+
+    const OFER_EMOJI = 'https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/240/apple/285/maple-leaf_1f341.png';
+    const TAL_EMOJI = 'https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/240/apple/285/alien-monster_1f47e.png';
+    const NOA_EMOJI = 'https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/240/apple/285/woman-genie_1f9de-200d-2640-fe0f.png';
+    const SHAHAR_EMOJI = BALLOON_URL;
+    const DANIELLE_EMOJI = 'https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/240/apple/285/parrot_1f99c.png';
+
+    const gagaNames = ['ayelet', 'saar', 'elad', 'noya', 'ofer', 'tal', 'noa', 'shahar', 'danielle']
+    const emojis = [AYELET_EMOJI, SAAR_EMOJI, ELAD_EMOJI, NOYA_EMOJI, OFER_EMOJI, TAL_EMOJI, NOA_EMOJI, SHAHAR_EMOJI, DANIELLE_EMOJI];
+    let chosenEmoji = BALLOON_URL;
+
+    const ayeletImage = document.querySelector('.ayelet');
+    const balloons = document.querySelector('.balloons');
+
+    const deleteAllBtn = document.querySelector('#delete-btn');
+    const randomColorsBtn = document.querySelector('#random-colors-btn');
+    const changeColorsBtn = document.querySelector('#change-colors-btn');
+    const randomGagaBtn = document.querySelector('#random-gaga-btn');
+
+
+    let randomColors = false;
+    let changeColors = false;
+
+    let balloonCounter = 0;
+    
+    const addBalloons = (n = 1) => {
+        console.log(n)
+        for (let i = 0; i < n; i++) {
+            const balloon = createBalloon();
+            balloons.appendChild(balloon);
+        }
+    }
+
+    function changeColor(balloonId) {
+        if (changeColors) {
+            b = balloons.querySelector(`#balloon${balloonId}`);
+            b.style.webkitFilter = `hue-rotate(${getRandomInt(360)}deg)`;
+        }
+    }
+
+    function createBalloon() {
+        const balloon = document.createElement('img');
+        balloonCounter++;
+        const balloonId = balloonCounter;
+        balloon.src = chosenEmoji;
+        balloon.className = 'balloon';
+        balloon.style.left = `${getRandomInt(100)}%`;
+        balloon.style.top = `${getRandomInt(100)}%`;
+        if (randomColors) {
+            balloon.style.webkitFilter = `hue-rotate(${getRandomInt(360)}deg)`;
+        }
+        balloon.id = `balloon${balloonId}`;
+        balloon.addEventListener('mouseover', () => {
+            changeColor(balloonId)
+        })
+        return balloon;
+    }
+
+    function getRandomInt(m) {
+        return Math.floor(Math.random() * m);
+    }
+
+    function deleteAllBalloons() {
+        balloons.innerHTML = "";
+    }
+
+    function toggleRandomColors() {
+        randomColors = !randomColors;
+        randomColorsBtn.classList.toggle("toggled");
+    }
+
+    function toggleChangeColors() {
+        changeColors = !changeColors;
+        changeColorsBtn.classList.toggle("toggled");
+    }
+
+    function randomGaga() {
+        const randomNumber = getRandomInt(gagaNames.length)
+        const chosenName = gagaNames[randomNumber];
+        chosenEmoji = emojis[randomNumber];
+        ayeletImage.src = `assets/${chosenName}-head.png`
+    }
+    
+    ayeletImage.addEventListener('mouseover', () => addBalloons(1));
+    ayeletImage.addEventListener('click', () => addBalloons(100));
+
+    deleteAllBtn.addEventListener('click', deleteAllBalloons);
+    randomColorsBtn.addEventListener('click', toggleRandomColors);
+    changeColorsBtn.addEventListener('click', toggleChangeColors);
+    randomGagaBtn.addEventListener('click', randomGaga);
+    
+    </script>
+</html>
