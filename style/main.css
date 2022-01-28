@@ -36,6 +36,12 @@ body {
           animation-iteration-count: 1.5;
 }
 
+@media screen and (max-width: 600px) {
+  .ayelet-div .ayelet {
+    width: 40%;
+  }
+}
+
 .buttons {
   position: fixed;
   bottom: 2%;
@@ -78,6 +84,13 @@ body {
 .buttons .btn.toggled {
   border-color: black;
   color: black;
+}
+
+@media screen and (max-width: 600px) {
+  .buttons .btn {
+    font-size: 100%;
+    padding: 10px 10px;
+  }
 }
 
 .balloon {
@@ -186,18 +199,6 @@ body {
   100% {
     -webkit-transform: translate(1px, -2px) rotate(-1deg);
             transform: translate(1px, -2px) rotate(-1deg);
-  }
-}
-
-
-@media only screen and (max-width: 600px) {
-  .ayelet {
-    width: 40%;
-  }
-  
-  .buttons .btn {
-    font-size: 100%;
-    margin: 10px;
   }
 }
 /*# sourceMappingURL=main.css.map */
